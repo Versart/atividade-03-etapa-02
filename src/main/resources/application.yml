@@ -1,0 +1,5 @@
+spring:
+    datasource:
+        url: jdbc:mysql://localhost:3306/locadora_games?createDatabaseIfNotExist=true&serverTimezone=UTC
+        username: admin_locadora
+        password: 12345678
