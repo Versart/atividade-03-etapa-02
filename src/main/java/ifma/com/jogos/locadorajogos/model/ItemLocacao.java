@@ -1,28 +1,26 @@
 package ifma.com.jogos.locadorajogos.model;
 
-
-
-import java.util.ArrayList;
-import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Entity
-@Table(name="jogos")
 @Data
-public class Jogo {
+public class ItemLocacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
+    @ManyToOne
+    private Locacao locacao;
 
-    @OneToMany(mappedBy = "jogo")
-    private List<JogoPlataforma> JogosPlataformas = new ArrayList<>();
+    @ManyToOne
+    private JogoPlataforma jogoPlataforma;
+
+    private Integer dias;
+
+    private Integer quantidade;
 }
