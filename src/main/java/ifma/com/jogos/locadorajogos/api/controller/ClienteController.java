@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ifma.com.jogos.locadorajogos.api.model.ClienteRequest;
@@ -23,9 +22,8 @@ public class ClienteController {
     private final ClienteService clienteService;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ClienteResponse> saveCliente(@RequestBody @Valid ClienteRequest clienteRequest) {
-        return ResponseEntity.ok(clienteService.saveCliente(clienteRequest));
+        return new ResponseEntity<>(clienteService.saveCliente(clienteRequest), HttpStatus.CREATED);
     }
 
     @GetMapping

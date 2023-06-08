@@ -5,6 +5,7 @@ package ifma.com.jogos.locadorajogos.domain.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import ifma.com.jogos.locadorajogos.api.model.JogoRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,8 +22,16 @@ public class Jogo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
+    private String titulo;
 
     @OneToMany(mappedBy = "jogo")
-    private List<JogoPlataforma> JogosPlataformas = new ArrayList<>();
+    private List<JogoPlataforma> jogosPlataformas = new ArrayList<>();
+
+
+    public Jogo(JogoRequest jogoRequest) {
+        this.titulo = jogoRequest.titulo();
+    }
+
+    
+
 }
