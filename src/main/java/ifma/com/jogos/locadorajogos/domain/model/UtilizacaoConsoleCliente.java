@@ -1,4 +1,6 @@
-package ifma.com.jogos.locadorajogos.model;
+package ifma.com.jogos.locadorajogos.domain.model;
+
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,19 +12,22 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="item_locacao")
-public class ItemLocacao {
+@Table(name="utilizacao_do_console_pelo_cliente")
+public class UtilizacaoConsoleCliente {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Locacao locacao;
+    private LocalDateTime inicio;
+
+    private LocalDateTime fim;
 
     @ManyToOne
-    private JogoPlataforma jogoPlataforma;
+    private Console console;
 
-    private Integer dias;
+    @ManyToOne
+    private Cliente cliente;
 
-    private Integer quantidade;
+
 }

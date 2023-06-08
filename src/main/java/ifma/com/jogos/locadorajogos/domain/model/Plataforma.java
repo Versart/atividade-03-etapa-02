@@ -1,6 +1,4 @@
-package ifma.com.jogos.locadorajogos.model;
-
-
+package ifma.com.jogos.locadorajogos.domain.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +12,15 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="jogos")
+@Table(name = "plataformas")
 @Data
-public class Jogo {
+public class Plataforma {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
-
-    @OneToMany(mappedBy = "jogo")
-    private List<JogoPlataforma> JogosPlataformas = new ArrayList<>();
+    @OneToMany(mappedBy = "plataforma")
+    private List<JogoPlataforma> jogosPlataformas = new ArrayList<>();
 }

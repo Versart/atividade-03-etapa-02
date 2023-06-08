@@ -1,4 +1,6 @@
-package ifma.com.jogos.locadorajogos.model;
+package ifma.com.jogos.locadorajogos.domain.model;
+
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,20 +9,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
+@Table(name="jogos")
 @Data
-@Table(name="acessorios")
-public class Acessorio {
+public class Jogo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
 
-    @ManyToMany(mappedBy = "acessorios")
-    private List<Console> consoles = new ArrayList<>();
+    @OneToMany(mappedBy = "jogo")
+    private List<JogoPlataforma> JogosPlataformas = new ArrayList<>();
 }

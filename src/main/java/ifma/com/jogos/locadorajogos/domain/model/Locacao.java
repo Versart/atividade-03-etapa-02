@@ -1,4 +1,4 @@
-package ifma.com.jogos.locadorajogos.model;
+package ifma.com.jogos.locadorajogos.domain.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package ifma.com.jogos.locadorajogos.model;
+package ifma.com.jogos.locadorajogos.domain.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
