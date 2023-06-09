@@ -1,6 +1,7 @@
 package ifma.com.jogos.locadorajogos.domain.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import ifma.com.jogos.locadorajogos.api.model.ItemLocacaoRequest;
 import ifma.com.jogos.locadorajogos.api.model.LocacaoRequest;
+import ifma.com.jogos.locadorajogos.api.model.LocacaoResponse;
 import ifma.com.jogos.locadorajogos.domain.model.Cliente;
 import ifma.com.jogos.locadorajogos.domain.model.ItemLocacao;
 import ifma.com.jogos.locadorajogos.domain.model.JogoPlataforma;
@@ -34,11 +36,12 @@ public class LocacaoService {
     private final ItemLocacaoRepository itemLocacaoRepository;
 
     @Transactional
-    public void saveLocacao(Long idCliente, LocacaoRequest locacaoRequest){
+    public LocacaoResponse saveLocacao(Long idCliente, LocacaoRequest locacaoRequest){
         Cliente clienteLocacao = clienteRepository.findById(idCliente).orElseThrow(() -> new RuntimeException());
         Locacao locacao = new Locacao();
         locacao.setCliente(clienteLocacao);
         locacao = locacaoRepository.save(locacao);
+        BigDecimal valorTotal = BigDecimal.ZERO;
         for(ItemLocacaoRequest item : locacaoRequest.itens()){
            JogoPlataforma jogo = jogoPlataformaRepository.findById(item.idJogoPlataforma()).orElseThrow(() -> new RuntimeException());
            ItemLocacao itemLocacao = new ItemLocacao(item);
@@ -46,7 +49,9 @@ public class LocacaoService {
            itemLocacao.setLocacao(locacao);
            itemLocacao.setValor(calcularValorItemLocacao(itemLocacao));
            itemLocacaoRepository.save(itemLocacao);
+           valorTotal = valorTotal.add(itemLocacao.getValor());
         }
+        return new LocacaoResponse(clienteLocacao.getNome(),LocalDate.now(), valorTotal );
     }
 
     private BigDecimal calcularValorItemLocacao(ItemLocacao itemLocacao){
