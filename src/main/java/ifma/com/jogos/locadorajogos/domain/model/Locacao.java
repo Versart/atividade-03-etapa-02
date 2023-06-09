@@ -21,7 +21,7 @@ public class Locacao {
     private Long id;
 
     @Column(name = "data_locacao")
-    private LocalDate dataLocacao;
+    private LocalDate dataLocacao =  LocalDate.now();
     @ManyToOne
     private Cliente cliente;
     @OneToMany(mappedBy = "locacao")
