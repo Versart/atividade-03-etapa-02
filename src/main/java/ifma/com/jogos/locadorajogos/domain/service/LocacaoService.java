@@ -1,5 +1,6 @@
 package ifma.com.jogos.locadorajogos.domain.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class LocacaoService {
     private final JogoPlataformaRepository jogoPlataformaRepository;
 
     private final ItemLocacaoRepository itemLocacaoRepository;
-    
+
     @Transactional
     public void saveLocacao(Long idCliente, LocacaoRequest locacaoRequest){
         Cliente clienteLocacao = clienteRepository.findById(idCliente).orElseThrow(() -> new RuntimeException());
@@ -43,7 +44,15 @@ public class LocacaoService {
            ItemLocacao itemLocacao = new ItemLocacao(item);
            itemLocacao.setJogoPlataforma(jogo);
            itemLocacao.setLocacao(locacao);
+           itemLocacao.setValor(calcularValorItemLocacao(itemLocacao));
            itemLocacaoRepository.save(itemLocacao);
         }
+    }
+
+    private BigDecimal calcularValorItemLocacao(ItemLocacao itemLocacao){
+        BigDecimal dias = new BigDecimal(itemLocacao.getDias());
+        BigDecimal valorItem = itemLocacao.getJogoPlataforma().getPrecoDiario().multiply(dias);
+        return valorItem.multiply(new BigDecimal(itemLocacao.getQuantidade()));
+
     }
 }

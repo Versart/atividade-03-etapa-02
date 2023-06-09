@@ -1,0 +1,1 @@
+alter table item_locacao add column valor double not null;

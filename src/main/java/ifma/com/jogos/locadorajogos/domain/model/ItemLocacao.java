@@ -1,5 +1,7 @@
 package ifma.com.jogos.locadorajogos.domain.model;
 
+import java.math.BigDecimal;
+
 import ifma.com.jogos.locadorajogos.api.model.ItemLocacaoRequest;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -30,6 +32,8 @@ public class ItemLocacao {
     private Integer dias;
 
     private Integer quantidade;
+
+    private BigDecimal valor;
 
     public ItemLocacao() {
         
