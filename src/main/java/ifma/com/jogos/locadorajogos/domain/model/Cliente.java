@@ -37,4 +37,8 @@ public class Cliente {
         this.telefone = clienteRequest.telefone();
     }
 
+    public Cliente() {
+        
+    }
+
 }

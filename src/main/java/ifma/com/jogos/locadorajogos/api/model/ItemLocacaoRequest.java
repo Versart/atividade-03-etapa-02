@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record ItemLocacaoRequest(
     @NotNull
-    Long idjogoPlataforma, 
+    Long idJogoPlataforma, 
     @NotNull
     Integer dias, 
     @NotNull

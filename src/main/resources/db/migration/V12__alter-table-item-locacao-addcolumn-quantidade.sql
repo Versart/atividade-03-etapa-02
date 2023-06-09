@@ -1,0 +1,1 @@
+alter table item_locacao add column quantidade int;

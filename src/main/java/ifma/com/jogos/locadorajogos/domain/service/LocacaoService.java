@@ -31,17 +31,19 @@ public class LocacaoService {
     private final JogoPlataformaRepository jogoPlataformaRepository;
 
     private final ItemLocacaoRepository itemLocacaoRepository;
+    
     @Transactional
     public void saveLocacao(Long idCliente, LocacaoRequest locacaoRequest){
         Cliente clienteLocacao = clienteRepository.findById(idCliente).orElseThrow(() -> new RuntimeException());
         Locacao locacao = new Locacao();
+        locacao.setCliente(clienteLocacao);
+        locacao = locacaoRepository.save(locacao);
         for(ItemLocacaoRequest item : locacaoRequest.itens()){
-           JogoPlataforma jogo = jogoPlataformaRepository.findById(item.idjogoPlataforma()).orElseThrow(() -> new RuntimeException());
+           JogoPlataforma jogo = jogoPlataformaRepository.findById(item.idJogoPlataforma()).orElseThrow(() -> new RuntimeException());
            ItemLocacao itemLocacao = new ItemLocacao(item);
            itemLocacao.setJogoPlataforma(jogo);
-           
-
+           itemLocacao.setLocacao(locacao);
+           itemLocacaoRepository.save(itemLocacao);
         }
-
     }
 }

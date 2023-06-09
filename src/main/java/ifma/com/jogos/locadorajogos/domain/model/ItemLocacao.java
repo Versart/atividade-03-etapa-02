@@ -1,6 +1,7 @@
 package ifma.com.jogos.locadorajogos.domain.model;
 
 import ifma.com.jogos.locadorajogos.api.model.ItemLocacaoRequest;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +19,7 @@ public class ItemLocacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "locacao_id")
     private Locacao locacao;
 
@@ -29,6 +30,10 @@ public class ItemLocacao {
     private Integer dias;
 
     private Integer quantidade;
+
+    public ItemLocacao() {
+        
+    }
 
     public ItemLocacao(ItemLocacaoRequest itemLocacaoRequest){
         this.dias = itemLocacaoRequest.dias();

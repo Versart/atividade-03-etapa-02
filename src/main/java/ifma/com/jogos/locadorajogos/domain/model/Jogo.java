@@ -27,11 +27,15 @@ public class Jogo {
     @OneToMany(mappedBy = "jogo")
     private List<JogoPlataforma> jogosPlataformas = new ArrayList<>();
 
+    public Jogo() {
+        
+    }
 
     public Jogo(JogoRequest jogoRequest) {
         this.titulo = jogoRequest.titulo();
     }
 
+    
     
 
 }
