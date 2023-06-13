@@ -5,7 +5,7 @@ import java.util.List;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
-public record LocacaoRequest(
+public record LocacaoJogosRequest(
     @NotNull
     @Valid
     List<ItemLocacaoRequest> itens ) {
