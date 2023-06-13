@@ -66,7 +66,7 @@ public class LocacaoService {
         }
         return new LocacaoResponse(clienteLocacao.getNome(),LocalDate.now(), valorTotal);
     }
-
+    @Transactional
     public LocacaoResponse saveLocacaoConsole(Long idCliente, LocacaoConsoleRequest locacaoRequest) {
         Cliente clienteLocacao = buscarClientePeloId(idCliente);
         Console console = buscarConsolePeloId(locacaoRequest.idConsole());
@@ -81,8 +81,10 @@ public class LocacaoService {
             console.getAcessorios().add(acessorioBuscado);
         }
         }
+        BigDecimal valorAluguel = calcularValorConsoleLocacao(utilizacaoConsole).setScale(2,RoundingMode.UP);
+        utilizacaoConsole.setValor(valorAluguel);
         var consoleAlugado = utilizacaoConsoleClienteRepository.save(utilizacaoConsole);
-        BigDecimal valorAluguel = calcularValorConsoleLocacao(consoleAlugado).setScale(2,RoundingMode.UP);
+        
         return new LocacaoResponse(consoleAlugado.getCliente().getNome(),LocalDate.now(),valorAluguel);
     }
 

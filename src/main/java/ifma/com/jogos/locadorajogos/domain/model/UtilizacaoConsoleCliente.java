@@ -1,5 +1,6 @@
 package ifma.com.jogos.locadorajogos.domain.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
@@ -22,6 +23,8 @@ public class UtilizacaoConsoleCliente {
     private LocalDateTime inicio;
 
     private LocalDateTime fim;
+
+    private BigDecimal valor;
 
     @ManyToOne
     private Console console;
