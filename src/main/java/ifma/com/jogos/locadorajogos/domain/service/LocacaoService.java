@@ -13,7 +13,9 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import ifma.com.jogos.locadorajogos.api.model.AcessorioRequest;
+import ifma.com.jogos.locadorajogos.api.model.ConsoleLocado;
 import ifma.com.jogos.locadorajogos.api.model.ItemLocacaoRequest;
+import ifma.com.jogos.locadorajogos.api.model.JogoLocado;
 import ifma.com.jogos.locadorajogos.api.model.LocacaoConsoleRequest;
 import ifma.com.jogos.locadorajogos.api.model.LocacaoJogosRequest;
 import ifma.com.jogos.locadorajogos.api.model.LocacaoResponse;
@@ -113,6 +115,16 @@ public class LocacaoService {
         produtosDisponiveis.addAll(preencherProdutosDisponiveis(jogosDisponiveis));
         produtosDisponiveis.addAll(preencherProdutosDisponiveis(consolesDisponiveis));
         return produtosDisponiveis;
+    }
+
+    public List<JogoLocado> listarJogosLocados() {
+        return itemLocacaoRepository.findAll().stream().map(item -> new JogoLocado(item))
+        .toList();
+    }
+
+    public List<ConsoleLocado>  listarConsolesLocados() {
+        return utilizacaoConsoleClienteRepository.findAll().stream()
+            .map(consoleLocado -> new ConsoleLocado(consoleLocado)).toList();
     }
 
     private List<ProdutosDisponiveis> preencherProdutosDisponiveis(List<? extends Nomeavel> produtoNomeavels) {

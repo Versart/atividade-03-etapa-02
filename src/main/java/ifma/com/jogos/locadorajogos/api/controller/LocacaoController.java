@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ifma.com.jogos.locadorajogos.api.model.ConsoleLocado;
+import ifma.com.jogos.locadorajogos.api.model.JogoLocado;
 import ifma.com.jogos.locadorajogos.api.model.LocacaoConsoleRequest;
 import ifma.com.jogos.locadorajogos.api.model.LocacaoJogosRequest;
 import ifma.com.jogos.locadorajogos.api.model.LocacaoResponse;
@@ -37,8 +39,17 @@ public class LocacaoController {
         return new ResponseEntity<>(locacaoService.saveLocacaoConsole(idCliente,locacaoRequest),HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/disponiveis")
     public ResponseEntity<List<ProdutosDisponiveis>> getLocacoesDisponiveis(@RequestParam LocalDateTime periodo ) {
         return ResponseEntity.ok(locacaoService.locacoesDisponiveis(periodo));
+    }
+    @GetMapping("/jogos")
+    public ResponseEntity<List<JogoLocado>> getJogosLocados(){
+        return ResponseEntity.ok(locacaoService.listarJogosLocados());
+    }
+
+    @GetMapping("/consoles")
+    public ResponseEntity<List<ConsoleLocado>> getConsolesLocados(){
+        return ResponseEntity.ok(locacaoService.listarConsolesLocados());
     }
 }
