@@ -1,0 +1,1 @@
+alter table jogos_plataformas add column quantidade int;

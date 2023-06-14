@@ -16,7 +16,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Console {
+public class Console implements Nomeavel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,9 +24,18 @@ public class Console {
     private String nome;
     @Column(name = "preco_por_hora")
     private BigDecimal precoPorHora;
+
+    private Integer quantidade;
     @ManyToMany
     @JoinTable(name = "console_acessorios",
     joinColumns= @JoinColumn(name="console_id"
     ), inverseJoinColumns = @JoinColumn(name="acessorio_id"))
     private List<Acessorio> acessorios = new ArrayList<>();
+    
+    @Override
+    public String nome() {
+       return this.nome;
+    }
+
+    
 }

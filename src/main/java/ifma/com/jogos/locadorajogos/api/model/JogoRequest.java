@@ -13,6 +13,8 @@ public record JogoRequest(
     @NotBlank
     String nomePlataforma, 
     @NotNull
-    BigDecimal preco) {
+    BigDecimal preco,
+    @NotNull
+    Integer quantidade) {
     
 }

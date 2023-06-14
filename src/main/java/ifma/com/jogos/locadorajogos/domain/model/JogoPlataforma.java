@@ -15,10 +15,12 @@ import lombok.Data;
 @Entity
 @Table(name="jogos_plataformas")
 @Data
-public class JogoPlataforma {
+public class JogoPlataforma implements Nomeavel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private Integer quantidade;
 
     @JoinColumn(name="jogos_id")
     @ManyToOne
@@ -29,4 +31,10 @@ public class JogoPlataforma {
     private Plataforma plataforma;
     @Column(name = "preco_diario")
     private BigDecimal precoDiario;
+    @Override
+    public String nome() {
+       return this.jogo.getTitulo();
+    }
+
+    
 }

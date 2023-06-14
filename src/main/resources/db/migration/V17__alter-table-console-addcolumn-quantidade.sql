@@ -1,0 +1,1 @@
+alter table console add column quantidade int;
