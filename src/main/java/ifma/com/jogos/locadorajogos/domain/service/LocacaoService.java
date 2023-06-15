@@ -99,7 +99,7 @@ public class LocacaoService {
         utilizacaoConsole.setCliente(clienteLocacao);
         utilizacaoConsole.setConsole(console);
         utilizacaoConsole.setFim(locacaoRequest.dataEntrega());
-        utilizacaoConsole.setInicio(LocalDateTime.now());
+        utilizacaoConsole.setInicio(locacaoRequest.dataInicio());
         if(locacaoRequest.acessorios() != null){
             for(AcessorioRequest acessorio : locacaoRequest.acessorios()){
                 Acessorio acessorioBuscado = acessorioRepositorio.findById(acessorio.idAcessorio()).orElseThrow(() -> new RuntimeException());
@@ -164,7 +164,12 @@ public class LocacaoService {
     private BigDecimal calcularValorConsoleLocacao(UtilizacaoConsoleCliente utilizacaoConsoleCliente) {
         Double tempo = Duration.between(utilizacaoConsoleCliente.getInicio(),utilizacaoConsoleCliente.getFim())
             .getSeconds()/3600.0;
+        BigDecimal desconto = consoleComDescontoRepository.findByConsoleId(
+            utilizacaoConsoleCliente.getConsole().getId()).getPorcentagemDesconto();
+        BigDecimal valorDoDesconto = utilizacaoConsoleCliente.getConsole().getPrecoPorHora()
+                .multiply(desconto).divide(new BigDecimal("100"));
         return utilizacaoConsoleCliente.getConsole().getPrecoPorHora()
+            .subtract(valorDoDesconto)
         .multiply(new BigDecimal(tempo.toString()));
     }
 }
