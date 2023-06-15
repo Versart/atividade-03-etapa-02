@@ -8,8 +8,6 @@ public record ItemLocacaoRequest(
     @NotNull
     Long idJogoPlataforma,
     @NotNull
-    LocalDate dataLocacao,
-    @NotNull
     Integer dias, 
     @NotNull
     Integer quantidade) {

@@ -31,8 +31,10 @@ import ifma.com.jogos.locadorajogos.domain.model.Nomeavel;
 import ifma.com.jogos.locadorajogos.domain.model.UtilizacaoConsoleCliente;
 import ifma.com.jogos.locadorajogos.domain.repository.AcessorioRepositorio;
 import ifma.com.jogos.locadorajogos.domain.repository.ClienteRepository;
+import ifma.com.jogos.locadorajogos.domain.repository.ConsoleComDescontoRepository;
 import ifma.com.jogos.locadorajogos.domain.repository.ConsoleRepository;
 import ifma.com.jogos.locadorajogos.domain.repository.ItemLocacaoRepository;
+import ifma.com.jogos.locadorajogos.domain.repository.JogoComDescontoRepository;
 import ifma.com.jogos.locadorajogos.domain.repository.JogoPlataformaRepository;
 import ifma.com.jogos.locadorajogos.domain.repository.LocacaoRepository;
 import ifma.com.jogos.locadorajogos.domain.repository.UtilizacaoConsoleClienteRepository;
@@ -56,6 +58,10 @@ public class LocacaoService {
     private final AcessorioRepositorio acessorioRepositorio;
 
     private final UtilizacaoConsoleClienteRepository utilizacaoConsoleClienteRepository;
+
+    private final JogoComDescontoRepository jogoComDescontoRepository;
+
+    private final ConsoleComDescontoRepository consoleComDescontoRepository;
 
     @Transactional
     public LocacaoResponse saveLocacaoJogos(Long idCliente, LocacaoJogosRequest locacaoRequest){
@@ -146,7 +152,12 @@ public class LocacaoService {
 
     private BigDecimal calcularValorJogoLocacao(ItemLocacao itemLocacao){
         BigDecimal dias = new BigDecimal(itemLocacao.getDias());
-        BigDecimal valorItem = itemLocacao.getJogoPlataforma().getPrecoDiario().multiply(dias);
+        BigDecimal desconto = jogoComDescontoRepository.findByJogoPlataformaId
+            (itemLocacao.getJogoPlataforma().getId()).getPorcentagemDesconto();
+        BigDecimal valorDoDesconto = itemLocacao.getJogoPlataforma().getPrecoDiario()
+            .multiply(desconto).divide(new BigDecimal("100"));
+        BigDecimal valorItem = itemLocacao.getJogoPlataforma().getPrecoDiario().subtract(valorDoDesconto).multiply(dias);
+        
         return valorItem.multiply(new BigDecimal(itemLocacao.getQuantidade()));
     }
 
