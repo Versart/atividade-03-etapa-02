@@ -34,6 +34,7 @@ public class LocacaoController {
     public ResponseEntity<LocacaoResponse> saveLocacaojogos(@Valid @RequestBody LocacaoJogosRequest locacaoRequest, @PathVariable Long idCliente){
         return new ResponseEntity<>(locacaoService.saveLocacaoJogos(idCliente, locacaoRequest), HttpStatus.CREATED);
     }
+
     @PostMapping("/{idCliente}/consoles")
     public ResponseEntity<LocacaoResponse> savelocacaoConsole(@Valid @RequestBody LocacaoConsoleRequest locacaoRequest, @PathVariable Long idCliente) {
         return new ResponseEntity<>(locacaoService.saveLocacaoConsole(idCliente,locacaoRequest),HttpStatus.CREATED);
@@ -43,6 +44,7 @@ public class LocacaoController {
     public ResponseEntity<List<ProdutosDisponiveis>> getLocacoesDisponiveis(@RequestParam LocalDateTime periodo ) {
         return ResponseEntity.ok(locacaoService.locacoesDisponiveis(periodo));
     }
+
     @GetMapping("/jogos")
     public ResponseEntity<List<JogoLocado>> getJogosLocados(){
         return ResponseEntity.ok(locacaoService.listarJogosLocados());
